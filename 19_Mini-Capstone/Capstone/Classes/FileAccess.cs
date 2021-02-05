@@ -14,6 +14,8 @@ namespace Capstone.Classes
         private string filePath = @"C:\Catering\cateringsystem.csv";
 
         // This class should contain any and all details of access to files
+
+
         public List<CateringItem> GetCateringItems()
         {
             List<CateringItem> items = new List<CateringItem>();
@@ -31,7 +33,7 @@ namespace Capstone.Classes
                     temp.Price = decimal.Parse(values[2]);
                     temp.Type = values[3];
                     items.Add(temp);
-                    
+
                 }
             }
             return items;

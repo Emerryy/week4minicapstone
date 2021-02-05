@@ -11,7 +11,7 @@ namespace Capstone.Classes
 
         private List<CateringItem> items = new List<CateringItem>();
         CateringItem cateringItem = new CateringItem();
-
+        
 
         private decimal balance = 0.00M;
 
@@ -40,15 +40,15 @@ namespace Capstone.Classes
         public CateringItem[] GetCateringItems()
         {
 
-            foreach (CateringItem item in items)
-            {
-                if (item.Quantity == 0)
-                {
-                    item.Name = item.Name + "***SOLDOUT***";
+            //foreach (CateringItem item in items)
+            //{
+            //    if (item.Quantity == 0)
+            //    {
+            //        item.Name = item.Name + "***SOLDOUT***";
 
 
-                }
-            }
+            //    }
+            //}
             return items.ToArray();
 
         }
@@ -82,6 +82,7 @@ namespace Capstone.Classes
 
 
             }
+            
             //if (!cateringItem.Code.Contains(productCode))
             //{
             //    Console.WriteLine("Sorry, that product doesn't exist." );

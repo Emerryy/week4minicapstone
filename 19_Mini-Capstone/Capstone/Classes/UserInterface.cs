@@ -23,6 +23,8 @@ namespace Capstone.Classes
         //(3) Complete Transaction
         //Current Account Balance: $20.00
 
+        
+
         private Catering catering = new Catering();
         private Change change = new Change();
 
@@ -127,16 +129,19 @@ namespace Capstone.Classes
                 {
                     Console.WriteLine("Sorry, you can only add whole dollar amounts");
                     Console.WriteLine();
-                    OrderMenu();
+
 
                 }
-                if (catering.AccountBalance + addMoney > 5000.00M)
+                else if (catering.AccountBalance + addMoney > 5000.00M)
                 {
                     Console.WriteLine("Sorry, your account balance can't exceed $5000");
                     Console.WriteLine();
-                    OrderMenu();
+
                 }
+                else
+                {
                 catering.AccountBalance += addMoney;
+                }
                 Console.WriteLine();
                 OrderMenu();
             }

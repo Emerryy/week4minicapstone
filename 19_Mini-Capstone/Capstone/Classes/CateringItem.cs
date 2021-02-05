@@ -18,6 +18,8 @@ namespace Capstone.Classes
 
         public string Type { get; set; }
 
+        
+
         public int Quantity
         {
             get
@@ -30,10 +32,19 @@ namespace Capstone.Classes
             }
         }
 
+
+
+
         public override string ToString()
         {
+            if(Quantity == 0)
+            {
+                return $"Item code {Code}, {Name}, ${Price}, SOLD OUT";
+            }
+            else
+            {
             return $"Item code {Code}, {Name}, ${Price}, {Quantity} available";
-
+            }
         }
     }
 }
