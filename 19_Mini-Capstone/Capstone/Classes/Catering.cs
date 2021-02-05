@@ -10,8 +10,10 @@ namespace Capstone.Classes
         // This class should contain all the "work" for catering
 
         private List<CateringItem> items = new List<CateringItem>();
-        CateringItem cateringItem = new CateringItem();
         FileAccess fileAccess = new FileAccess();
+
+        private decimal totalPurchase = 0M;
+        private List<string> receipt = new List<string>();
 
         private decimal balance = 0.00M;
 
@@ -82,17 +84,21 @@ namespace Capstone.Classes
 
         }
 
-        decimal totalPurchase = 0M;
-        List<string> receipt = new List<string>();
+
         public string[] Receipt()
         {
-
-            return receipt.ToArray();
+            string[] temp = receipt.ToArray();
+            receipt.Clear();
+            return temp;
 
         }
         public decimal TotalPurchase()
         {
-            return totalPurchase;
+            decimal temp = totalPurchase;
+            totalPurchase = 0;
+
+
+            return temp;
         }
 
         public string AddMoney(decimal addMoney)

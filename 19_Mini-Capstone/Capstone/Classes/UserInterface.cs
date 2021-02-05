@@ -67,33 +67,39 @@ namespace Capstone.Classes
 
         public void OrderMenu()
         {
-            Console.WriteLine();
-            Console.WriteLine("1) Add Money");
-            Console.WriteLine("2) Select Products");
-            Console.WriteLine("3) Complete Transaction");
-            Console.WriteLine("Your account balance is: $" + catering.AccountBalance);
-            string userInput = Console.ReadLine();
-            switch (userInput)
+            bool done = false;
+            while (!done)
             {
-                case "1":
-                    AddMoney();
-                    break;
+                Console.WriteLine();
+                Console.WriteLine("1) Add Money");
+                Console.WriteLine("2) Select Products");
+                Console.WriteLine("3) Complete Transaction");
+                Console.WriteLine("Your account balance is: $" + catering.AccountBalance);
+                string userInput = Console.ReadLine();
 
-                case "2":
-                    ListItems();
-                    CustOrder();
 
-                    break;
+                switch (userInput)
+                {
+                    case "1":
+                        AddMoney();
+                        break;
 
-                case "3":
-                    CompleteTransaction();
+                    case "2":
+                        ListItems();
+                        CustOrder();
 
-                    break;
-                default:
-                    Console.WriteLine("Please enter a valid menu option, using only the number of the option");
-                    break;
+                        break;
+
+                    case "3":
+                        CompleteTransaction();
+                        done = true;
+                        break;
+                    default:
+                        Console.WriteLine("Please enter a valid menu option, using only the number of the option");
+                        break;
+                }
+                Console.WriteLine();
             }
-            Console.WriteLine();
         }
 
         public void ListItems()
@@ -121,7 +127,6 @@ namespace Capstone.Classes
             Console.WriteLine(catering.Update(productCode, quantity));
 
             Console.WriteLine();
-            OrderMenu();
         }
 
         public void AddMoney()
@@ -132,7 +137,7 @@ namespace Capstone.Classes
             decimal addMoney = decimal.Parse(Console.ReadLine());
             Console.WriteLine(catering.AddMoney(addMoney));
             Console.WriteLine();
-            OrderMenu();
+
         }
 
         public void CompleteTransaction()
