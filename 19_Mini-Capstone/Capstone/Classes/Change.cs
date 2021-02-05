@@ -6,7 +6,7 @@ namespace Capstone.Classes
 {
     public class Change
     {
-        //Catering catering = new Catering();
+        FileAccess fileAccess = new FileAccess();
 
 
 
@@ -20,6 +20,9 @@ namespace Capstone.Classes
             int fiveDollar = 0;
             int tenDollar = 0;
             int twentyDollar = 0;
+            decimal temp = catering.AccountBalance;
+
+
 
             while (catering.AccountBalance > 0)
             {
@@ -61,6 +64,7 @@ namespace Capstone.Classes
                 }
 
             }
+            fileAccess.Audit($"{DateTime.Now} GIVE CHANGE: ${temp} ${catering.AccountBalance}");
             return $"You were given {twentyDollar} 20's, {tenDollar} 10's, {fiveDollar} 5's, {oneDollar} 1's, {quarter} quarters, {dime} dimes, and {nickel} nickels. Thanks!";
 
         }

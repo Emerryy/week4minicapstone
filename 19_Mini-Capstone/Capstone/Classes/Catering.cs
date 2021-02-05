@@ -11,11 +11,9 @@ namespace Capstone.Classes
 
         private List<CateringItem> items = new List<CateringItem>();
         CateringItem cateringItem = new CateringItem();
-        
+        FileAccess fileAccess = new FileAccess();
 
         private decimal balance = 0.00M;
-
-
 
         public decimal AccountBalance
         {
@@ -32,7 +30,7 @@ namespace Capstone.Classes
 
         public Catering()
         {
-            FileAccess fileAccess = new FileAccess();
+            //FileAccess fileAccess = new FileAccess();
             items = fileAccess.GetCateringItems();
 
         }
@@ -40,19 +38,11 @@ namespace Capstone.Classes
         public CateringItem[] GetCateringItems()
         {
 
-            //foreach (CateringItem item in items)
-            //{
-            //    if (item.Quantity == 0)
-            //    {
-            //        item.Name = item.Name + "***SOLDOUT***";
-
-
-            //    }
-            //}
             return items.ToArray();
 
         }
-        public void Update(string productCode, int quantity)
+
+        public string Update(string productCode, int quantity)
         {
 
             foreach (CateringItem item in items)
@@ -61,20 +51,26 @@ namespace Capstone.Classes
                 {
                     if (item.Quantity == 0)
                     {
-                        Console.WriteLine("Product sold out");
+                        return "Product sold out";
                     }
                     else if (quantity > item.Quantity)
                     {
-                        Console.WriteLine("Sorry, but we don't have enough of that.");
+                        return "Sorry, but we don't have enough of that.";
                     }
                     else if (balance < item.Price * quantity)
                     {
-                        Console.WriteLine("Sorry, you don't have enough money for that.");
+                        return "Sorry, you don't have enough money for that.";
                     }
                     else
                     {
                         item.Quantity -= quantity;
                         balance -= (item.Price * quantity);
+                        receipt.Add($"{quantity} {item.Type} {item.Name} ${item.Price} ${item.Price * quantity}");
+                        totalPurchase += (item.Price * quantity);
+                        fileAccess.Audit($"{DateTime.Now} {quantity} {item.Name} ${item.Price * quantity} ${balance}");
+
+
+                        return "Purchase successful.";
 
                     }
 
@@ -82,18 +78,42 @@ namespace Capstone.Classes
 
 
             }
-            
-            //if (!cateringItem.Code.Contains(productCode))
-            //{
-            //    Console.WriteLine("Sorry, that product doesn't exist." );
-            //}
-
-
+            return "Sorry, that product doesn't exist.";
 
         }
 
+        decimal totalPurchase = 0M;
+        List<string> receipt = new List<string>();
+        public string[] Receipt()
+        {
 
+            return receipt.ToArray();
 
+        }
+        public decimal TotalPurchase()
+        {
+            return totalPurchase;
+        }
+
+        public string AddMoney(decimal addMoney)
+        {
+            if (addMoney % 1 != 0)
+            {
+                return "Sorry, you can only add whole dollar amounts";
+
+            }
+            else if (balance + addMoney > 5000.00M)
+            {
+
+                return "Sorry, your account balance can't exceed $5000";
+            }
+            else
+            {
+                balance += addMoney;
+                fileAccess.Audit($"{DateTime.Now} ADD MONEY: ${addMoney} ${balance}");
+                return "Added successfully";
+            }
+        }
 
     }
 }

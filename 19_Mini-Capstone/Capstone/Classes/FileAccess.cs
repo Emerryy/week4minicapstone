@@ -12,6 +12,9 @@ namespace Capstone.Classes
         //cateringsystem.csv
         //Code|Name|Price|Type
         private string filePath = @"C:\Catering\cateringsystem.csv";
+        private string auditPath = @"C:\Catering\log.txt";
+
+
 
         // This class should contain any and all details of access to files
 
@@ -31,12 +34,38 @@ namespace Capstone.Classes
                     temp.Code = values[0];
                     temp.Name = values[1];
                     temp.Price = decimal.Parse(values[2]);
-                    temp.Type = values[3];
+
+
+                    if (values[3] == "B")
+                    {
+                        temp.Type = "Beverage";
+                    }
+                    else if (values[3] == "E")
+                    {
+                        temp.Type = "Entree";
+                    }
+                    else if (values[3] == "D")
+                    {
+                        temp.Type = "Dessert";
+                    }
+                    else if (values[3] == "A")
+                    {
+                        temp.Type = "Appetizer";
+                    }
                     items.Add(temp);
 
                 }
             }
             return items;
+        }
+        public void Audit(string log)
+        {
+
+
+            using (StreamWriter sw = new StreamWriter(auditPath, true))
+            {
+                sw.WriteLine(log);
+            }
         }
     }
 }
